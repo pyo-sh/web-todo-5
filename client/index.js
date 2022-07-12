@@ -1,9 +1,10 @@
 import "@client/index.scss";
+import Header from "@client/component/Header.js";
 
 (function () {
-  const body = document.body;
-  body.innerHTML = `
-    <div id="root"></div>`;
+  document.body.appendChild(
+    Header({
+      children: [`<div>hi</div>`],
+    }),
+  );
 })();
-
-sum(3, 5);
