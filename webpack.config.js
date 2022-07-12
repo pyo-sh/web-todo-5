@@ -19,6 +19,7 @@ module.exports = {
     alias: {
       "@client": path.resolve(__dirname, "client"),
     },
+    extensions: ["js"],
   },
   module: {
     rules: [
@@ -35,7 +36,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpe?g|gif)$/,
-        loader: "file-loader",
+        type: "asset/resource",
       },
     ],
   },

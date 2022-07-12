@@ -5,3 +5,5 @@ import "@client/index.scss";
   body.innerHTML = `
     <div id="root"></div>`;
 })();
+
+sum(3, 5);
