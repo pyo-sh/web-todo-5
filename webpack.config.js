@@ -19,7 +19,7 @@ module.exports = {
     alias: {
       "@client": path.resolve(__dirname, "client"),
     },
-    extensions: ["js"],
+    extensions: [".js"],
   },
   module: {
     rules: [

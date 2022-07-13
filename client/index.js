@@ -1,9 +1,6 @@
 import "@client/index.scss";
+import App from "@client/App";
 
 (function () {
-  const body = document.body;
-  body.innerHTML = `
-    <div id="root"></div>`;
+  new App(document.body);
 })();
-
-sum(3, 5);
