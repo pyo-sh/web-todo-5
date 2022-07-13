@@ -1,4 +1,5 @@
 import "@client/component/Board/CardList.scss";
+import CardItem from "@client/component/Board/CardItem";
 
 export default class CardList {
   constructor($target) {
@@ -13,14 +14,19 @@ export default class CardList {
     this.$cardList.innerHTML = `
       <section class="cardList-header text-undraggable">
         <article class="cardList-strengther">
-          <h2 class="cardList-title">해야할 일</h2>
-          <div class="cardList-count">2</div>
+          <h2 class="cardList-title">${"title"}</h2>
+          <div class="cardList-count">${"count"}</div>
         </article>
-        <button class="plus-button"></button>
-        <button class="x-button"></button>
+        <button class="plus-button hover-blue"></button>
+        <button class="x-button hover-red"></button>
       </section>
-      <ul class="cardList-list"></ul>
     `;
     this.$target.appendChild(this.$cardList);
+
+    this.$cardRealList = document.createElement("ul");
+    this.$cardRealList.className = "cardList-list";
+    this.$cardList.appendChild(this.$cardRealList);
+    // TODO : Render from Lists Data
+    this.carditem = new CardItem(this.$cardRealList);
   }
 }
