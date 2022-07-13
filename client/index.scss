@@ -48,6 +48,14 @@ body {
   &:after {
     transform: rotate(-45deg);
   }
+
+  &:hover {
+    &:after,
+    &:before {
+      // red
+      background-color: #ff4343;
+    }
+  }
 }
 
 .plus-button {
@@ -75,5 +83,13 @@ body {
   }
   &:after {
     transform: rotate(90deg);
+  }
+
+  &:hover {
+    &:after,
+    &:before {
+      // blue
+      background-color: #0075de;
+    }
   }
 }
