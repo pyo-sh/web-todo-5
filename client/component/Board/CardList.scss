@@ -1,0 +1,74 @@
+.cardList {
+  width: 100%;
+  max-width: 308px;
+  margin: 0;
+  padding: 24px 0 0 0;
+  flex: 1;
+}
+
+.cardList-header {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 16px;
+
+  display: flex;
+  align-items: center;
+}
+
+.cardList-strengther {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.cardList-title {
+  width: 71px;
+  height: 26px;
+  padding: 1px 0 0 0;
+  margin: 0 8px;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 26px;
+
+  color: #010101;
+}
+
+.cardList-count {
+  width: 26px;
+  height: 26px;
+  padding-top: 2px;
+
+  font-family: "Noto Sans KR";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  color: #010101;
+  border-radius: 20px;
+  background-color: #bdbdbd;
+
+  flex: none;
+  flex-grow: 0;
+}
+
+.cardList-list {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  list-style: none;
+}

@@ -1,4 +1,5 @@
 import Header from "@client/component/Header";
+import Board from "@client/component/Board/Board";
 
 // 상태관리를 필요로 하는 덩어리들을 컴포넌트로 만든다.
 export default class App {
@@ -13,5 +14,6 @@ export default class App {
     this.$app.id = "root";
     this.$target.appendChild(this.$app);
     this.header = new Header(this.$app);
+    this.board = new Board(this.$app);
   }
 }
