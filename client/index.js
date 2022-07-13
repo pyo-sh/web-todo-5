@@ -1,10 +1,8 @@
 import "@client/index.scss";
-import Header from "@client/component/Header.js";
+import App from "./App";
 
 (function () {
-  document.body.appendChild(
-    Header({
-      children: [`<div>hi</div>`],
-    }),
-  );
+  const obj = { children: [] };
+  App.call(obj);
+  document.body.appendChild(obj.children[0].object.$element);
 })();
