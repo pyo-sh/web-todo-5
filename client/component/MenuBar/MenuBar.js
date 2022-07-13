@@ -11,6 +11,19 @@ export default class MenuBar {
     this.render();
   }
 
+  init() {
+    window.addEventListener("click", (event) => {
+      const $menuBar = event.target.closest(".menuBar");
+      const $menuButton = event.target.closest(".menuButton");
+
+      if ($menuBar || $menuButton) return;
+
+      if (this.isMenuBarOpen) {
+        this.toggleMenuBar();
+      }
+    });
+  }
+
   toggleMenuBar() {
     if (this.isMenuBarOpen) {
       this.isMenuBarOpen = false;
@@ -33,5 +46,6 @@ export default class MenuBar {
     this.$target.appendChild(this.$menuBar);
 
     this.history = new History(document.querySelector(".menuBar .section2"));
+    this.init();
   }
 }
