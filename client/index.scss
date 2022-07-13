@@ -9,6 +9,21 @@ body {
   padding: 0;
 }
 
+:root {
+  --primary-button-color: #00529b;
+  --main-button-color: #0075de;
+  --secondary-button-color: #828282;
+  --button-font-color: #ffffff;
+  --main-border-color: #0075de;
+  --warning-border-color: #ff4343;
+  --secondary-border-color: none;
+  --main-font-color: #010101;
+  --secondary-font-color: #bdbdbd;
+  --main-card-background-color: #ffffff;
+  --secondary-card-background-color: rgba(255, 255, 255, 0.8);
+  --warning-card-background-color: #ffeeec;
+ }
+ 
 .text-undraggable {
   -ms-user-select: none;
   -moz-user-select: -moz-none;
