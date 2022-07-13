@@ -5,6 +5,18 @@ export default class CardItem {
     this.$target = $target;
     this.render();
   }
+
+  init() {
+    const { $cardItem } = this;
+    const $button = $cardItem.querySelector("#cardItem-delete");
+    $button.addEventListener("mouseenter", () => {
+      $cardItem.classList.toggle("cardItem-highlighted", true);
+    });
+    $button.addEventListener("mouseleave", () => {
+      $cardItem.classList.toggle("cardItem-highlighted", false);
+    });
+  }
+
   render() {
     this.$cardItem?.remove();
     this.$cardItem = document.createElement("li");
@@ -16,8 +28,9 @@ export default class CardItem {
         <p class="cardItem-content">${"content"}</p>
         <span class="cardItem-author">${"author"}</span>
       </article>
-      <button class="x-button"></button>
+      <button id="cardItem-delete" class="x-button"></button>
     `;
     this.$target.appendChild(this.$cardItem);
+    this.init();
   }
 }
