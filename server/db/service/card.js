@@ -1,23 +1,29 @@
 const pool = require("../loader");
 const promisePool = pool.promise();
 
+const objectToQuerySet = (obj) => {
+  return Object.entries(obj)
+    .reduce((set, [key, value]) => {
+      if (value) set.push(`${key} = "${value}"`);
+      return set;
+    }, [])
+    .join(",");
+};
+
 module.exports = {
   createCard(data) {
-    const { title, content, author, ordered, board } = data;
+    const { title, content, author, board } = data;
 
-    if (!(title && content && author && ordered && board)) {
+    if (!(title && content && author && board)) {
       throw Error("Invalid Card Data");
     }
+
+    const querySet = objectToQuerySet(data);
 
     return promisePool.execute(`
       INSERT INTO
         card
-      SET
-        title = "${title}",
-        content = "${content}",
-        author = "${author}",
-        ordered = ${ordered},
-        board = ${board};
+      SET ${querySet}
     `);
   },
   deleteCard(id) {
@@ -42,12 +48,7 @@ module.exports = {
       throw Error("Invalid Title & Content");
     }
 
-    const querySet = Object.entries(data)
-      .reduce((set, [key, value]) => {
-        if (value) set.push(`${key} = "${value}"`);
-        return set;
-      }, [])
-      .join(",");
+    const querySet = objectToQuerySet(data);
 
     return promisePool.execute(`
       UPDATE
