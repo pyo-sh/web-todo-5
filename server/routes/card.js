@@ -9,7 +9,17 @@ router.put("/", (req, res, next) => {
   Card.createCard(data)
     .then(([result]) => {
       const id = result.insertId;
-      res.send({ id });
+      res.send({ id, message: "정상적으로 추가됐습니다." });
+    })
+    .catch(next);
+});
+
+// 카드 삭제 (url: /:id, method: DELETE)
+router.delete("/:id", (req, res, next) => {
+  const id = req.params.id;
+  Card.deleteCard(id)
+    .then(() => {
+      res.send({ message: "정상적으로 삭제됐습니다." });
     })
     .catch(next);
 });
