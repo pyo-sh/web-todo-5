@@ -29,7 +29,10 @@ export default class MenuBar {
       this.isMenuBarOpen = false;
       this.$menuBar.style.left = this.MENUBAR_HIDE_POS;
     } else {
+      this.history.fetchHistory();
+      // 이와함께 id가 변경된다.
       this.isMenuBarOpen = true;
+      // history set State를 호출해준다
       this.$menuBar.style.left = this.MENUBAR_SHOW_POS;
     }
   }
