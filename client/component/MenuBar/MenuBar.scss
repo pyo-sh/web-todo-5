@@ -1,7 +1,7 @@
 .menuBar {
   position: absolute;
   z-index: 3;
-  background-color: var(--secondary-font-color);
+  background-color: white;
   width: calc(100vw - 70vw);
   height: 100vh;
   top: 0;
@@ -9,6 +9,7 @@
   transition: 0.5s;
   padding: 50px 30px;
   overflow-y: auto;
+  box-shadow: 1px 1px 5px gray;
 }
 
 .section1 {
