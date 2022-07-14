@@ -93,6 +93,7 @@ export default class History {
   }
 
   render() {
+    this.$history?.remove();
     this.$history = document.createElement("div");
     this.$history.className = "history";
     this.$target.appendChild(this.$history);
