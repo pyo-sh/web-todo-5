@@ -1,5 +1,6 @@
 import "@client/component/Board/CardList.scss";
 import CardItem from "@client/component/Board/CardItem";
+import CardActive from "@client/component/Board/CardActive";
 
 export default class CardList {
   constructor($target) {
@@ -28,5 +29,6 @@ export default class CardList {
     this.$cardList.appendChild(this.$cardRealList);
     // TODO : Render from Lists Data
     this.carditem = new CardItem(this.$cardRealList);
+    this.cardactive = new CardActive(this.$cardRealList);
   }
 }
