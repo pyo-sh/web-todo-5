@@ -32,7 +32,7 @@ router.patch("/:id", (req, res, next) => {
 
   Card.updateCard(id, data)
     .then(() => {
-      res.send({});
+      res.send({ message: "정상적으로 수정됐습니다." });
     })
     .catch(next);
 });
