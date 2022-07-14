@@ -31,4 +31,30 @@ module.exports = {
       WHERE id = ${id};
     `);
   },
+  updateCard(id, data) {
+    id = parseInt(id);
+    const { title, content } = data;
+
+    if (!id || typeof id !== "number") {
+      throw Error("Invalid ID");
+    }
+    if (!(title || content)) {
+      throw Error("Invalid Title & Content");
+    }
+
+    const querySet = Object.entries(data)
+      .reduce((set, [key, value]) => {
+        if (value) set.push(`${key} = "${value}"`);
+        return set;
+      }, [])
+      .join(",");
+
+    return promisePool.execute(`
+      UPDATE
+        card
+      SET ${querySet}
+      WHERE
+        id = ${id}
+    `);
+  },
 };
