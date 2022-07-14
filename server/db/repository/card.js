@@ -10,7 +10,6 @@ const checkCardTable = (pool) => {
         title VARCHAR(50) NOT NULL,
         content VARCHAR(500) NOT NULL,
         author VARCHAR(14) NOT NULL,
-        ordered INT NOT NULL,
         board INT NOT NULL,
         FOREIGN KEY (board) REFERENCES board(id) ON UPDATE CASCADE
       );
