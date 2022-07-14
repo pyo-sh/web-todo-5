@@ -7,14 +7,52 @@ export default class History {
       src: "해야할 일",
       dest: "하고있는 일",
       act: "이동",
-      createdAt: "2019-09-02",
+      createdAt: "2022-07-13 01:53:01",
     },
-    { "title": "HTML/CSS 공부할 것", src: "", dest: "하고있는 일", act: "등록" },
+    {
+      "title": "HTML/CSS 공부할 것",
+      src: "",
+      dest: "하고있는 일",
+      act: "등록",
+      createdAt: "2022-07-14 10:28:01",
+    },
   ];
 
   constructor($target) {
     this.$target = $target;
     this.render();
+  }
+
+  getPassedTime(date) {
+    const createDate = new Date(date);
+    const todayDate = new Date();
+
+    const diffTime = todayDate.getTime() - createDate.getTime(); // ms 단위
+    const diffSeconds = Math.floor(diffTime / 1000);
+
+    if (diffSeconds < 60) {
+      return diffSeconds + "초 전";
+    }
+    const diffMinutes = Math.floor(diffTime / (1000 * 60));
+
+    if (diffMinutes < 60) {
+      return diffMinutes + "분 전";
+    }
+    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+
+    if (diffHours < 24) {
+      return diffHours + "시간 전";
+    }
+
+    let dateText = `${createDate.getMonth() + 1}월 ${createDate.getDay() + 1}일`;
+
+    const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 31));
+
+    if (diffMonths < 31) {
+      dateText = `${createDate.getFullYear()}년 ${dateText}`;
+    }
+
+    return dateText;
   }
 
   // 텍스트 끝 문자의 종성을 구하는 함수
@@ -57,7 +95,7 @@ export default class History {
                 <div>
                   ${this.getCardContentHTML(data)}
                 </div>
-                <div class="passedTime">${data.createdAt}</div>
+                <div class="passedTime">${this.getPassedTime(data.createdAt)}</div>
               </div>
            </div>`,
       )
