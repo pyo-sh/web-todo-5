@@ -17,9 +17,22 @@ router.put("/", (req, res, next) => {
 // 카드 삭제 (url: /:id, method: DELETE)
 router.delete("/:id", (req, res, next) => {
   const id = req.params.id;
+
   Card.deleteCard(id)
     .then(() => {
       res.send({ message: "정상적으로 삭제됐습니다." });
+    })
+    .catch(next);
+});
+
+// 카드 수정 (url: /:id, method: PATCH)
+router.patch("/:id", (req, res, next) => {
+  const id = req.params.id;
+  const data = req.body;
+
+  Card.updateCard(id, data)
+    .then(() => {
+      res.send({});
     })
     .catch(next);
 });
