@@ -17,7 +17,6 @@ module.exports = {
     );
   },
   groupCardsByBoards(boards, cards) {
-    console.log(boards, cards);
     const arrayToBoardObject = (obj, target) => {
       const { id } = target;
       obj[id] = {
@@ -27,8 +26,9 @@ module.exports = {
       };
       return obj;
     };
+
     const groupedObj = boards.reduce(arrayToBoardObject, {});
-    console.log(groupedObj);
+
     cards.forEach((card) => {
       const boardID = card.board;
       groupedObj[boardID].cards.push(card);

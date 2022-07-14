@@ -3,32 +3,36 @@ import CardItem from "@client/component/Board/CardItem";
 import CardActive from "@client/component/Board/CardActive";
 
 export default class CardList {
-  constructor($target) {
+  constructor($target, board) {
     this.$target = $target;
+    this.state = board;
     this.render();
   }
   render() {
-    this.$cardList?.remove();
-    this.$cardList = document.createElement("div");
-    this.$cardList.className = "cardList";
-    // TODO : Render datas
-    this.$cardList.innerHTML = `
+    const { title, cards } = this.state;
+
+    this.$listWrapper?.remove();
+    this.$listWrapper = document.createElement("div");
+    this.$listWrapper.className = "cardList";
+    this.$listWrapper.innerHTML = `
       <section class="cardList-header text-undraggable">
         <article class="cardList-strengther">
-          <h2 class="cardList-title">${"title"}</h2>
-          <div class="cardList-count">${"count"}</div>
+          <h2 class="cardList-title">${title}</h2>
+          <div class="cardList-count">${cards.length}</div>
         </article>
         <button class="plus-button hover-blue"></button>
         <button class="x-button hover-red"></button>
       </section>
     `;
-    this.$target.appendChild(this.$cardList);
+    this.$target.appendChild(this.$listWrapper);
 
-    this.$cardRealList = document.createElement("ul");
-    this.$cardRealList.className = "cardList-list";
-    this.$cardList.appendChild(this.$cardRealList);
-    // TODO : Render from Lists Data
-    this.carditem = new CardItem(this.$cardRealList);
-    this.cardactive = new CardActive(this.$cardRealList);
+    this.$cardList = document.createElement("ul");
+    this.$cardList.className = "cardList-list";
+    this.$listWrapper.appendChild(this.$cardList);
+
+    const $cardList = this.$cardList;
+    this.cardItems = this.state.cards.map((card) => {
+      return new CardItem($cardList, card);
+    });
   }
 }

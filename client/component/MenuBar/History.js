@@ -1,5 +1,5 @@
 import "../MenuBar/History.scss"; // <- at the top of your entry point
-import { requestGetAllHistory } from "./api/history";
+import { requestGetAllHistory } from "@client/api/history";
 
 export default class History {
   history = [];

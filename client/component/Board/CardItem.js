@@ -1,8 +1,9 @@
 import "@client/component/Board/CardItem.scss";
 
 export default class CardItem {
-  constructor($target) {
+  constructor($target, card) {
     this.$target = $target;
+    this.state = card;
     this.render();
   }
 
@@ -18,15 +19,17 @@ export default class CardItem {
   }
 
   render() {
+    const { title, content, author } = this.state;
+
     this.$cardItem?.remove();
     this.$cardItem = document.createElement("li");
     this.$cardItem.className = "cardItem";
     // TODO : Render datas
     this.$cardItem.innerHTML = `
       <article class="cardItem-main text-undraggable">
-        <h3 class="cardItem-title">${"title"}</h3>
-        <p class="cardItem-content">${"content"}</p>
-        <span class="cardItem-author">${"author"}</span>
+        <h3 class="cardItem-title">${title}</h3>
+        <p class="cardItem-content">${content}</p>
+        <span class="cardItem-author">${author}</span>
       </article>
       <button id="cardItem-delete" class="x-button"></button>
     `;
