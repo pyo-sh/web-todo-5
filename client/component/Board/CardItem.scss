@@ -11,6 +11,7 @@
   background: #ffffff;
   box-shadow: 0px 1px 30px rgba(224, 224, 224, 0.3);
   border-radius: 6px;
+  cursor: pointer;
 }
 
 .cardItem-highlighted {
@@ -19,7 +20,7 @@
 }
 
 .cardItem-main {
-  width: 100%;
+  // width: 100%;
   padding: 0;
 
   display: flex;
