@@ -20,4 +20,15 @@ module.exports = {
         board = ${board};
     `);
   },
+  deleteCard(id) {
+    id = parseInt(id);
+    if (!id || typeof id !== "number") {
+      throw Error("Invalid ID");
+    }
+
+    return promisePool.execute(`
+      DELETE FROM card
+      WHERE id = ${id};
+    `);
+  },
 };
