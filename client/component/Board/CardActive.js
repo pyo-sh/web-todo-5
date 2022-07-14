@@ -15,7 +15,7 @@ export default class CardActive {
       const scroll_height = element.scrollHeight;
       element.style.height = `${scroll_height}px`;
     };
-    adjustTextareaHeight();
+    adjustTextareaHeight({ target: $textarea });
     $textarea.addEventListener("input", adjustTextareaHeight);
   }
 
@@ -28,12 +28,14 @@ export default class CardActive {
       <input
         class="cardActive-title"
         placeholder="제목을 입력하세요"
+        maxlength="50"
         value=${"title"}
       />
       <textarea
         id="cardActive-content"
         class="cardActive-content"
         placeholder="내용을 입력하세요"
+        maxlength="500"
       >${"content"}</textarea>
       <article class="cardActive-buttons">
         <button id="cardActive-cancel" class="cardActive-button">
