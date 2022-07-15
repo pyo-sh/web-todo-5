@@ -1,0 +1,30 @@
+.menuBar {
+  position: absolute;
+  z-index: 9999;
+  background-color: white;
+  width: calc(100vw - 70vw);
+  height: 100vh;
+  top: 0;
+  left: 100vw;
+  transition: 0.5s;
+  padding: 50px 30px;
+  overflow-y: auto;
+  box-shadow: 1px 1px 5px gray;
+}
+
+.section1 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  float: right;
+  font-size: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+body {
+  overflow-x: hidden;
+}

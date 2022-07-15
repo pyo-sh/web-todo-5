@@ -1,0 +1,24 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.historyCard {
+  display: flex;
+  gap: 15px;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  .passedTime {
+    color: var(--secondary-font-color);
+  }
+}
