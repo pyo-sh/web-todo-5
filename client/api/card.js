@@ -3,6 +3,9 @@ import { requestCreateHistory } from "@client/api/history";
 // 카드의 변경작업이 발생한 후 호출하면 된다.
 export const requestCreateCard = (title, content, author, boardId, boardName) => {
   return requestCreateHistory("등록", "", boardName, title, author)
+    .catch((err) => {
+      console.log("카드 등록 히스토리 요청 API 에러 발생" + err);
+    })
     .then(() =>
       fetch("/card", {
         method: "PUT",

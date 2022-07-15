@@ -105,6 +105,20 @@ export default class CardList {
         }
       };
     });
+
+    this.$listWrapper.addEventListener("click", (event) => {
+      const $plusButton = event.target.closest(".plus-button");
+      if (!$plusButton) return;
+
+      new CardActive(this.$cardList, {
+        board: this.state,
+        // onClickCreateCard: ({ id, cardTitle, content, boardTitle, boardId, author }) => {
+        //   const newCards = [...cards, { id, title: cardTitle, content, author, board: boardId }];
+        //   const newBoard = { ...this.state, cards: newCards };
+        //   this.setState(newBoards);
+        // },
+      });
+    });
   }
 
   render() {
