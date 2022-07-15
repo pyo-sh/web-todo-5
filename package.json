@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "webpack && node ./server/bin/www",
-    "dev": "webpack -w | nodemon ./server/bin/www"
+    "dev": "webpack -w | nodemon ./server/bin/www",
+    "build": "webpack && pm2 ./server/bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

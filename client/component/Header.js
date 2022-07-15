@@ -1,4 +1,4 @@
-import "@client/component/header.scss";
+import "@client/component/Header.scss";
 import MenuButton from "@client/component/MenuBar/MenuButton";
 import MenuBar from "@client/component/MenuBar/MenuBar";
 
