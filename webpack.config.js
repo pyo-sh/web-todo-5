@@ -35,14 +35,15 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
-        test: /\.(png|svg|jpe?g|gif)$/,
+        test: /\.(png|svg|jpe?g|gif|ico)$/,
         type: "asset/resource",
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "title",
+      title: "TO-DO-LIST",
+      favicon: "client/image/favicon.ico",
     }),
     new MiniCssExtractPlugin({ filename: "index.css" }),
   ],
