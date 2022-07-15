@@ -2,6 +2,9 @@ import { requestCreateHistory } from "@client/api/history";
 // 카드의 변경작업이 발생한 후 호출하면 된다.
 const requestCreateCard = (title, content, author, boardId, boardName) => {
   return requestCreateHistory("등록", "", boardName, title, author)
+    .catch((err) => {
+      console.log("카드 등록 히스토리 요청 API 에러 발생" + err);
+    })
     .then(() =>
       fetch("/card", {
         method: "PUT",
@@ -14,8 +17,6 @@ const requestCreateCard = (title, content, author, boardId, boardName) => {
       console.log("카드 등록 요청 API 에러 발생" + err);
     });
 };
-
-// requestCreateCard("영양제 챙겨먹기", "힘들어요 ㅠ^ㅠ", "team5", 1, "해야할 일");
 
 const requestUpdateCard = (id, title, content, author, boardName) => {
   return requestCreateHistory("수정", "", boardName, title, author)
@@ -67,4 +68,4 @@ const requestMoveCard = (src, dest, target, srcName, destName, targetName) => {
     });
 };
 
-module.exports = { requestCreateCard, requestUpdateCard, requestDeleteCard, requestMoveCard };
+export { requestCreateCard, requestUpdateCard, requestDeleteCard, requestMoveCard };

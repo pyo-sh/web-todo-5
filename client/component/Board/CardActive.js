@@ -1,8 +1,12 @@
 import "@client/component/Board/CardActive.scss";
+import { requestCreateCard } from "@client/api/card";
 
 export default class CardActive {
-  constructor($target) {
+  state = { content: "", title: "" };
+
+  constructor($target, { board, onClickCreateCard }) {
     this.$target = $target;
+    this.board = board;
     this.render();
   }
 
@@ -17,6 +21,35 @@ export default class CardActive {
     };
     adjustTextareaHeight({ target: $textarea });
     $textarea.addEventListener("input", adjustTextareaHeight);
+
+    // 등록 클릭 시
+    this.$cardActive.addEventListener("click", (event) => {
+      const $accessButton = event.target.closest("#cardActive-access");
+      if (!$accessButton) return;
+
+      const { title: cardTitle, content } = this.state;
+      const { id, title: boardTitle } = this.board;
+
+      requestCreateCard(cardTitle, content, "team5", id, boardTitle);
+    });
+
+    // 인풋 있을 때 상태 변경
+    this.$cardActive.addEventListener("change", (event) => {
+      const $title = event.target.closest(".cardActive-title");
+      if (!$title) return;
+      this.setState({ ...this.state, title: event.target.value });
+    });
+
+    this.$cardActive.addEventListener("change", (event) => {
+      const $content = event.target.closest("#cardActive-content");
+      if (!$content) return;
+      this.setState({ ...this.state, content: event.target.value });
+    });
+  }
+
+  setState(state) {
+    this.state = state;
+    this.render();
   }
 
   render() {
@@ -29,14 +62,14 @@ export default class CardActive {
         class="cardActive-title"
         placeholder="제목을 입력하세요"
         maxlength="50"
-        value=${"title"}
-      />
+        value=${this.state.title}
+      >
       <textarea
         id="cardActive-content"
         class="cardActive-content"
         placeholder="내용을 입력하세요"
         maxlength="500"
-      >${"content"}</textarea>
+      >${this.state.content}</textarea>
       <article class="cardActive-buttons">
         <button id="cardActive-cancel" class="cardActive-button">
           ${"취소"}
