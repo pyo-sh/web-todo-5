@@ -1,6 +1,7 @@
 import { requestCreateHistory } from "@client/api/history";
+
 // 카드의 변경작업이 발생한 후 호출하면 된다.
-const requestCreateCard = (title, content, author, boardId, boardName) => {
+export const requestCreateCard = (title, content, author, boardId, boardName) => {
   return requestCreateHistory("등록", "", boardName, title, author)
     .catch((err) => {
       console.log("카드 등록 히스토리 요청 API 에러 발생" + err);
@@ -18,7 +19,8 @@ const requestCreateCard = (title, content, author, boardId, boardName) => {
     });
 };
 
-const requestUpdateCard = (id, title, content, author, boardName) => {
+// requestCreateCard("영양제 챙겨먹기", "힘들어요 ㅠ^ㅠ", "team5", 1, "해야할 일");
+export const requestUpdateCard = (id, title, content, author, boardName) => {
   return requestCreateHistory("수정", "", boardName, title, author)
     .then(() =>
       fetch(`/card/${id}`, {
@@ -35,7 +37,7 @@ const requestUpdateCard = (id, title, content, author, boardName) => {
     });
 };
 
-const requestDeleteCard = (id, title, author, boardName) => {
+export const requestDeleteCard = (id, title, author, boardName) => {
   return requestCreateHistory("삭제", "", boardName, title, author)
     .then(() =>
       fetch(`/card/${id}`, {
@@ -51,7 +53,7 @@ const requestDeleteCard = (id, title, author, boardName) => {
 };
 
 // src, dest => boardId, srcName, destName => boardName
-const requestMoveCard = (src, dest, target, srcName, destName, targetName) => {
+export const requestMoveCard = (src, dest, target, srcName, destName, targetName) => {
   return requestCreateHistory("이동", srcName, destName, targetName, author)
     .then(() =>
       fetch(`/move`, {
@@ -67,5 +69,3 @@ const requestMoveCard = (src, dest, target, srcName, destName, targetName) => {
       console.log("카드 이동 요청 API 에러 발생" + err);
     });
 };
-
-export { requestCreateCard, requestUpdateCard, requestDeleteCard, requestMoveCard };
