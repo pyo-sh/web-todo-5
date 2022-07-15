@@ -19,12 +19,12 @@ export default class CardItem {
   }
 
   render() {
-    const { title, content, author } = this.state;
+    const { title, content, author, index } = this.state;
 
     this.$cardItem?.remove();
     this.$cardItem = document.createElement("li");
     this.$cardItem.className = "cardItem";
-    // TODO : Render datas
+    this.$cardItem.setAttribute("data-index", index);
     this.$cardItem.innerHTML = `
       <article class="cardItem-main text-undraggable">
         <h3 class="cardItem-title">${title}</h3>

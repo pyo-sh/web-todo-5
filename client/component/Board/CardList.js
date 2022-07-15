@@ -1,7 +1,10 @@
 import "@client/component/Board/CardList.scss";
 import CardItem from "@client/component/Board/CardItem";
 import CardActive from "@client/component/Board/CardActive";
+import { requestDeleteCard } from "@client/api/card";
 
+let isWaiting = false;
+let isClicked = false;
 let $dragging = null;
 
 export default class CardList {
@@ -9,14 +12,29 @@ export default class CardList {
     this.$target = $target;
     this.state = board;
     this.render();
-    this.init();
   }
   init() {
-    let $parent = this.$target;
-    const $cardList = this.$cardList;
+    const { $cardList, cardItems, state } = this;
+    const render = this.render.bind(this);
+
     $cardList.addEventListener("mousedown", (event) => {
       const $cardItem = event.target.closest(".cardItem");
       if (!$cardItem) return;
+
+      const $deleteButton = event.target.closest("#cardItem-delete");
+      if ($deleteButton) {
+        const index = $cardItem.getAttribute("data-index");
+        const { id, title, author } = cardItems[index]?.state;
+        const { title: boardName } = state;
+        requestDeleteCard(id, title, author, boardName).then(({ message }) => {
+          if (!message) return;
+          state.cards = state.cards.filter(({ id: cardID }) => cardID !== id);
+          render();
+        });
+        return;
+      }
+
+      if (isClicked) return;
 
       // 클릭했을 때 $target과 마우스의 x, y차이
       const { left, top } = $cardItem.getBoundingClientRect();
@@ -25,13 +43,10 @@ export default class CardList {
 
       // 움직일 때, 다른 요소에는 영향 주지 않게 하려면 위치를 절대적으로 설정해줘야한다.
       const $shadow = $cardItem.cloneNode(true);
+      $shadow.classList.add("cardItem-shadow");
       $cardItem.insertAdjacentElement("beforebegin", $shadow);
       $cardItem.style.position = "absolute";
       $cardItem.style.zIndex = 1000;
-
-      // 현재 위치한 부모에서 body로 직접 이동하여
-      // body를 기준으로 위치를 지정합니다.
-      // document.body.append($cardItem);
 
       // 공을 pageX, pageY 좌표 중앙에 위치하게 합니다.
       function moveAt(pageX, pageY) {
@@ -44,38 +59,15 @@ export default class CardList {
 
       $dragging = $cardItem;
       let $currentBelow = null;
-      let currentDroppable = null;
       const onMouseMove = (event) => {
         // 문서를 기준으로, 이벤트가 발생한 x, y의 위치
         moveAt(event.pageX, event.pageY);
         // 여기는 스타일 조정 구간입니다.
-        // 마우스 이벤트는 윈도우 밖으로 트리거 될 수 없습니다.(공을 윈도우 밖으로 드래그 했을 때)
         // clientX∙clientY가 윈도우 밖에 있으면, elementFromPoint는 null을 반환합니다.
-        // 잠재적으로 드롭 할 수 있는 요소를 'droppable' 클래스로 지정합니다.(다른 로직 가능)
         $cardItem.style.display = "none";
         let $elemBelow = document.elementFromPoint(event.clientX, event.clientY);
         $cardItem.style.display = "";
         $currentBelow = $elemBelow.closest(".cardList-list");
-
-        if (!$elemBelow) return;
-
-        // let droppableBelow = $elemBelow.closest(".cardList-list");
-
-        // if (currentDroppable != droppableBelow) {
-        //   if (currentDroppable) {
-        //     const $droppable = document.querySelector(".droppable");
-        //     $droppable.style.border = "5px solid black";
-        //     console.log("leave...");
-        //   }
-        //   currentDroppable = droppableBelow;
-        //   if (currentDroppable) {
-        //     const $droppable = document.querySelector(".droppable");
-        //     $droppable.style.border = "5px solid pink";
-        //     console.log("in...");
-        //   }
-        // } else {
-        //   // 이동위치 = 기존 위치
-        // }
       };
 
       // (2) mousemove로 공을 움직입니다.
@@ -91,10 +83,11 @@ export default class CardList {
         const { y: mouseY } = event;
         if (!$currentBelow) $currentBelow = $cardList;
 
+        let index = 0;
         const listItems = [...$currentBelow.children].filter((item) =>
           item.classList.contains("cardItem"),
         );
-        listItems.some((list) => {
+        listItems.some((list, i) => {
           const { y, height } = list.getBoundingClientRect();
           const listCenterY = y + height / 2;
 
@@ -115,12 +108,13 @@ export default class CardList {
   }
 
   render() {
-    const { title, cards } = this.state;
+    const { state } = this;
+    const { title, cards } = state;
+    const render = this.render.bind(this);
 
-    this.$listWrapper?.remove();
-    this.$listWrapper = document.createElement("div");
-    this.$listWrapper.className = "cardList";
-    this.$listWrapper.innerHTML = `
+    const $newListWrapper = document.createElement("div");
+    $newListWrapper.className = "cardList";
+    $newListWrapper.innerHTML = `
       <section class="cardList-header text-undraggable">
         <article class="cardList-strengther">
           <h2 class="cardList-title">${title}</h2>
@@ -130,15 +124,21 @@ export default class CardList {
         <button class="x-button hover-red"></button>
       </section>
     `;
-    this.$target.appendChild(this.$listWrapper);
+
+    if (this.$listWrapper) {
+      this.$target.replaceChild($newListWrapper, this.$listWrapper);
+      this.$listWrapper?.remove();
+    } else this.$target.appendChild($newListWrapper);
+    this.$listWrapper = $newListWrapper;
 
     this.$cardList = document.createElement("ul");
     this.$cardList.className = "cardList-list";
     this.$listWrapper.appendChild(this.$cardList);
 
     const $cardList = this.$cardList;
-    this.cardItems = this.state.cards.map((card) => {
-      return new CardItem($cardList, card);
+    this.cardItems = this.state.cards.map((card, index) => {
+      return new CardItem($cardList, { ...card, index });
     });
+    this.init();
   }
 }
